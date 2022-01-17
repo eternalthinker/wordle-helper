@@ -7,13 +7,24 @@ def get_5_letter_words():
       if len(word) == 5:
         words_5letters_file.write(word + '\n')
 
+def get_5_letter_words_freq_csv():
+  with open("unigram_freq.csv", 'r') as all_words_file, open("words_5letters_freq.txt", 'w') as words_5letters_file:
+    all_lines = all_words_file.read().split('\n')
+    for line in all_lines:
+      if line.strip() == '':
+        continue
+      word, freq = line.split(',')
+      if len(word) == 5:
+        words_5letters_file.write(word + '\n')
 
-def print_suggested_words(words_5letters, exclude_letters, exclude_positions, include_positions):
+
+def print_suggested_words(words_5letters, exclude_letters, exclude_positions, include_positions, limit=None):
   include_letters = set()
   for wrong_pos_letter_set in exclude_positions:
     include_letters |= wrong_pos_letter_set
   num_include_letters = len(include_letters)
-
+  
+  count = 0
   for word in words_5letters:
     word = word.lower()
     skip_word = False
@@ -40,6 +51,9 @@ def print_suggested_words(words_5letters, exclude_letters, exclude_positions, in
       continue
 
     print(word)
+    count += 1
+    if limit is not None and count == limit:
+      break
 
 
 def suggest_words():
@@ -83,7 +97,7 @@ def suggest_words_interactive():
   ]
 
   words_5letters = None
-  with open('words_5letters.txt', 'r') as words_5letters_file:
+  with open('words_5letters_freq.txt', 'r') as words_5letters_file:
     words_5letters = words_5letters_file.read().split('\n')
 
   while True:
@@ -102,13 +116,14 @@ def suggest_words_interactive():
       include_positions[pos] = None if include_pos_new == '' else include_pos_new
 
     print("\nSuggested words are:")
-    print_suggested_words(words_5letters, exclude_letters, exclude_positions, include_positions)
+    print_suggested_words(words_5letters, exclude_letters, exclude_positions, include_positions, limit=25)
 
     should_continue = input("\nContinue? (Enter 'n' to exit): ")
     if should_continue.strip().lower() == 'n':
       break
 
 #get_5_letter_words()
+#get_5_letter_words_freq_csv()
 #suggest_words()
 suggest_words_interactive()
 
