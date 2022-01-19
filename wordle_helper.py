@@ -50,6 +50,9 @@ common_letters_map = {
 
 def get_common_letter_score(word):
   score = 0
+  # Push plurals down to the bottom
+  if word.endswith('s'):
+    return score
   for letter in word:
     if letter in common_letters_map:
       score += common_letters_map[letter]
