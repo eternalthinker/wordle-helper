@@ -61,7 +61,7 @@ def get_common_letter_score(word):
       score += common_letters_map[letter]
   return score
 
-def get_suggested_words(words_5letters, exclude_letters, exclude_positions, include_positions, limit=25):
+def get_suggested_words(words_5letters, exclude_letters, exclude_positions, include_positions, attempt_count, limit=25):
   include_letters = set()
   for wrong_pos_letter_set in exclude_positions:
     include_letters |= wrong_pos_letter_set
@@ -99,7 +99,8 @@ def get_suggested_words(words_5letters, exclude_letters, exclude_positions, incl
       del common_letters_map[letter]
 
   selected_suggested_words = suggested_words[:25]
-  selected_suggested_words.sort(reverse=True, key=get_common_letter_score)
+  if attempt_count < 4:
+    selected_suggested_words.sort(reverse=True, key=get_common_letter_score)
   return suggested_words, selected_suggested_words
 
 
@@ -146,7 +147,26 @@ def suggest_words_interactive():
     words_5letters = words_5letters_file.read().split('\n')
 
   suggested_words = None
+  attempt_count = 1
   while True:
+    print("\nSuggested words are:")
+    words_list = words_5letters if (suggested_words is None) else suggested_words
+    suggested_words, selected_suggested_words = get_suggested_words(
+        words_list,
+        exclude_letters,
+        exclude_positions,
+        include_positions,
+        attempt_count,
+    )
+    for word in selected_suggested_words:
+      print(word)
+
+    should_continue = input("\nContinue? (Enter 'n' to exit): ")
+    if should_continue.strip().lower() == 'n':
+      break
+
+    attempt_count += 1
+
     exclude_letters_new_ip = input("\nWhich new letters must be EXCLUDED in the word? (separate with space): ")
     exclude_letters_new = exclude_letters_new_ip.split()
     exclude_letters.update(exclude_letters_new)
@@ -160,21 +180,6 @@ def suggest_words_interactive():
       include_pos_new_ip = input("\nWhich letter must be INCLUDED in position {}? (separate with space): ".format(pos+1))
       include_pos_new = include_pos_new_ip.strip()
       include_positions[pos] = None if include_pos_new == '' else include_pos_new
-
-    print("\nSuggested words are:")
-    words_list = words_5letters if (suggested_words is None) else suggested_words
-    suggested_words, selected_suggested_words = get_suggested_words(
-        words_list,
-        exclude_letters,
-        exclude_positions,
-        include_positions,
-    )
-    for word in selected_suggested_words:
-      print(word)
-
-    should_continue = input("\nContinue? (Enter 'n' to exit): ")
-    if should_continue.strip().lower() == 'n':
-      break
 
 #get_5_letter_words()
 #get_5_letter_words_freq_csv()
