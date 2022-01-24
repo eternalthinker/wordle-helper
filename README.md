@@ -1,7 +1,7 @@
 ## Solver
 Loads the daily wordle puzzle and auto solves it.
 `python3 wordle_solver.py`
-![solver](./images/wordle_solver.gif)
+<img src="./images/wordle_solver.gif" width="700"/>
 
 ## Helper
 The interactive version lets you enter letter constraints in the commandline, and provides word suggestions.
@@ -11,7 +11,7 @@ Run `python3 wordle_helper.py`
 #### Letter count in the word
 
 Only 1 E in the word.  
-![single E](./images/single_count.png)
+<img src="./images/single_count.png" width="200"/>
 
 At least 2 B's in the word  
-![multiple Bs](./images/multiple_count.png)
+<img src="./images/multiple_count.png" width="200"/>
