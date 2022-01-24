@@ -1,6 +1,11 @@
-## How to run
+## Solver
+Loads the daily wordle puzzle and auto solves it.
+`python3 wordle_solver.py`
+![solver](./images/wordle_solver.gif)
+
+## Helper
+The interactive version lets you enter letter constraints in the commandline, and provides word suggestions.
 Run `python3 wordle_helper.py`  
-The interactive version lets you enter letter constraints in the commandline.
 
 ### Not implemented
 #### Letter count in the word
