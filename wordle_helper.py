@@ -125,6 +125,12 @@ def suggest_words():
     words_5letters = words_5letters_file.read().split('\n')
     print_suggested_words(words_5letters, exclude_letters, exclude_positions, include_positions)
 
+def get_5letter_words():
+  words_5letters = None
+  with open('words_5letters_freq.txt', 'r') as words_5letters_file:
+    words_5letters = words_5letters_file.read().split('\n')
+  return words_5letters
+
 def suggest_words_interactive():
   exclude_letters = set([])
   exclude_positions = [
@@ -142,10 +148,7 @@ def suggest_words_interactive():
     None,
   ]
 
-  words_5letters = None
-  with open('words_5letters_freq.txt', 'r') as words_5letters_file:
-    words_5letters = words_5letters_file.read().split('\n')
-
+  words_5letters = get_5letter_words()
   suggested_words = None
   attempt_count = 1
   while True:
@@ -184,5 +187,5 @@ def suggest_words_interactive():
 #get_5_letter_words()
 #get_5_letter_words_freq_csv()
 #suggest_words()
-suggest_words_interactive()
+# suggest_words_interactive()
 
