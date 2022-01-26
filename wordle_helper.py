@@ -98,9 +98,10 @@ def get_suggested_words(words_5letters, exclude_letters, exclude_positions, incl
     if letter in common_letters_map:
       del common_letters_map[letter]
 
-  selected_suggested_words = suggested_words[:25]
+  maybe_sorted_words = suggested_words[:]
   if attempt_count < 4:
-    selected_suggested_words.sort(reverse=True, key=get_common_letter_score)
+    maybe_sorted_words.sort(reverse=True, key=get_common_letter_score)
+  selected_suggested_words = maybe_sorted_words[:25]
   return suggested_words, selected_suggested_words
 
 
