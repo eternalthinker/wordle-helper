@@ -50,16 +50,19 @@ common_letters_map = {
 
 def get_common_letter_score(word):
   score = 0
-  # Push plurals down to the bottom
-  if word.endswith('s'):
-    return score
-  # Push possible past tense to the bottom
-  if word.endswith('ed'):
-    return score
   for letter in set(word):
     if letter in common_letters_map:
       score += common_letters_map[letter]
   return score
+
+def get_word_type_score(word):
+  # Push plurals down to the bottom
+  if word.endswith('s'):
+    return 0
+  # Push possible past tense to the bottom
+  if word.endswith('ed'):
+    return 0
+  return 1
 
 def get_suggested_words(words_5letters, exclude_letters, exclude_positions, include_positions, attempt_count, limit=25):
   include_letters = set()
@@ -98,10 +101,12 @@ def get_suggested_words(words_5letters, exclude_letters, exclude_positions, incl
     if letter in common_letters_map:
       del common_letters_map[letter]
 
-  maybe_sorted_words = suggested_words[:]
+  sorted_words = suggested_words[:]
   if attempt_count < 4:
-    maybe_sorted_words.sort(reverse=True, key=get_common_letter_score)
-  selected_suggested_words = maybe_sorted_words[:25]
+    sorted_words.sort(reverse=True, key=get_common_letter_score)
+  sorted_words.sort(reverse=True, key=get_word_type_score)
+
+  selected_suggested_words = sorted_words[:25]
   return suggested_words, selected_suggested_words
 
 
