@@ -1,3 +1,6 @@
+## Web helper
+For a web version of the Wordle helperr, see: https://code.eternalthinker.co/wordle-helper-web/
+
 ## Solver
 Loads the daily wordle puzzle and auto solves it.
 `python3 wordle_solver.py`
