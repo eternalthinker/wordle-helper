@@ -7,12 +7,19 @@ def get_5_letter_words():
       if len(word) == 5:
         words_5letters_file.write(word + '\n')
 
-def get_5_letter_words_freq_csv():
-  with open("corncob_lowercase.txt", 'r') as all_words_file,\
-      open("unigram_freq.csv", 'r') as freq_words_file,\
-      open("words_5letters_freq.txt", 'w') as words_5letters_file:
+def get_6_letter_words():
+  with open("corncob_lowercase.txt", 'r') as all_words_file, open("words_6letters.txt", 'w') as words_6letters_file:
     all_words = all_words_file.read().split('\n')
-    all_5letter_words = [word for word in all_words if len(word) == 5]
+    for word in all_words:
+      if len(word) == 6:
+        words_6letters_file.write(word + '\n')
+
+def get_letter_words_freq_csv(num_letters=5):
+  with open("/usr/share/dict/words", 'r') as all_words_file,\
+      open("unigram_freq.csv", 'r') as freq_words_file,\
+      open("words_{}letters_freq.txt".format(num_letters), 'w') as words_letters_file:
+    all_words = all_words_file.read().split('\n')
+    all_letter_words = [word.lower() for word in all_words if len(word) == num_letters]
     
     word_freq_map = {}
     all_freq_lines = freq_words_file.read().split('\n')
@@ -20,17 +27,17 @@ def get_5_letter_words_freq_csv():
       if line.strip() == '':
         continue
       word, freq = line.split(',')
-      if len(word) == 5:
-        word_freq_map[word] = int(freq)
+      if len(word) == num_letters:
+        word_freq_map[word.lower()] = int(freq)
     
     def get_word_freq(w):
       if w in word_freq_map:
         return word_freq_map[w]
       return 0
     
-    all_5letter_words.sort(reverse=True, key=get_word_freq)
-    for word in all_5letter_words:
-      words_5letters_file.write(word + '\n')
+    all_letter_words.sort(reverse=True, key=get_word_freq)
+    for word in all_letter_words:
+      words_letters_file.write(word + '\n')
     
 
 common_letters_map = {
@@ -191,7 +198,7 @@ def suggest_words_interactive():
       include_positions[pos] = None if include_pos_new == '' else include_pos_new
 
 #get_5_letter_words()
-#get_5_letter_words_freq_csv()
+#get_letter_words_freq_csv(num_letters=6)
 #suggest_words()
 # suggest_words_interactive()
-
+#get_6_letter_words()
