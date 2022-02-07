@@ -1,5 +1,15 @@
-words_5letters = None
-with open('words_5letters_freq.txt', 'r') as words_5letters_file, open('wordslist.txt','w') as listfile:
-  words_5letters = words_5letters_file.read().split('\n')
-  for word in words_5letters:
-    listfile.write("'" + word + "'," + "\n")
+import random
+
+def words_to_comma_list(src, randomize=False):
+  with open(src, 'r') as words_letters_file,\
+      open("comma_" + src,'w') as listfile:
+    words_letters = words_letters_file.read().split('\n')
+    if randomize:
+      random.shuffle(words_letters)
+    for word in words_letters:
+      if word == "":
+        continue
+      listfile.write("'" + word + "'," + "\n")
+
+words_to_comma_list("words_6letters.txt", randomize=False)
+words_to_comma_list("words_6letters_freq.txt", randomize=True)

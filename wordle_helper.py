@@ -1,21 +1,19 @@
 # python3
 
-def get_5_letter_words():
-  with open("corncob_lowercase.txt", 'r') as all_words_file, open("words_5letters.txt", 'w') as words_5letters_file:
-    all_words = all_words_file.read().split('\n')
-    for word in all_words:
-      if len(word) == 5:
-        words_5letters_file.write(word + '\n')
+src_corncob = "corncob_lowercase.txt"
+src_unix_dict = "/usr/share/dict/words"
+src_alpha = "words_alpha.txt"
 
-def get_6_letter_words():
-  with open("corncob_lowercase.txt", 'r') as all_words_file, open("words_6letters.txt", 'w') as words_6letters_file:
+def get_letter_words_alphabetical(num_letters=5):
+  with open(src_unix_dict, 'r') as all_words_file,\
+      open("words_{}letters.txt".format(num_letters), 'w') as words_letters_file:
     all_words = all_words_file.read().split('\n')
     for word in all_words:
-      if len(word) == 6:
-        words_6letters_file.write(word + '\n')
+      if len(word) == num_letters:
+        words_letters_file.write(word.lower() + '\n')
 
 def get_letter_words_freq_csv(num_letters=5):
-  with open("/usr/share/dict/words", 'r') as all_words_file,\
+  with open(src_corncob, 'r') as all_words_file,\
       open("unigram_freq.csv", 'r') as freq_words_file,\
       open("words_{}letters_freq.txt".format(num_letters), 'w') as words_letters_file:
     all_words = all_words_file.read().split('\n')
@@ -198,7 +196,7 @@ def suggest_words_interactive():
       include_positions[pos] = None if include_pos_new == '' else include_pos_new
 
 #get_5_letter_words()
-#get_letter_words_freq_csv(num_letters=6)
 #suggest_words()
 # suggest_words_interactive()
-#get_6_letter_words()
+#get_letter_words_alphabetical(num_letters=6)
+#get_letter_words_freq_csv(num_letters=6)
