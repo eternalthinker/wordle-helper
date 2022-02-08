@@ -4,6 +4,21 @@ src_corncob = "corncob_lowercase.txt"
 src_unix_dict = "/usr/share/dict/words"
 src_alpha = "words_alpha.txt"
 
+def get_words_all_sources(num_letters):
+  srcs = [src_unix_dict, src_corncob, src_alpha]
+  words = set()
+  for src in srcs:
+    with open(src) as word_file:
+      all_words = word_file.read().split('\n')
+      sel_words = [word.lower() for word in all_words if len(word) == num_letters]
+      words.update(sel_words)
+  words_list = list(words)
+  words_list.sort()
+  with open("all_words_{}.txt".format(num_letters), "w") as all_words_file:
+    for word in words_list:
+      all_words_file.write(word + "\n")
+
+
 def get_letter_words_alphabetical(num_letters=5):
   with open(src_unix_dict, 'r') as all_words_file,\
       open("words_{}letters.txt".format(num_letters), 'w') as words_letters_file:
@@ -200,3 +215,4 @@ def suggest_words_interactive():
 # suggest_words_interactive()
 #get_letter_words_alphabetical(num_letters=6)
 #get_letter_words_freq_csv(num_letters=6)
+#get_words_all_sources(num_letters=6)

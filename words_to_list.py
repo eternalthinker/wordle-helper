@@ -11,5 +11,6 @@ def words_to_comma_list(src, randomize=False):
         continue
       listfile.write("'" + word + "'," + "\n")
 
-words_to_comma_list("words_6letters.txt", randomize=False)
-words_to_comma_list("words_6letters_freq.txt", randomize=True)
+#words_to_comma_list("words_6letters.txt", randomize=False)
+#words_to_comma_list("words_6letters_freq.txt", randomize=True)
+words_to_comma_list("all_words_6.txt", randomize=False)
