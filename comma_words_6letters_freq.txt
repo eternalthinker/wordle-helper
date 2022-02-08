@@ -1,6 +1,5 @@
 'reveal',
 'caviar',
-'drawer',
 'lively',
 'profit',
 'noodle',
