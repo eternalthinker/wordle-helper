@@ -3,6 +3,7 @@
 src_corncob = "corncob_lowercase.txt"
 src_unix_dict = "/usr/share/dict/words"
 src_alpha = "words_alpha.txt"
+src_wordle5 = "wordle_5list.txt" 
 
 def get_words_all_sources(num_letters):
   srcs = [src_unix_dict, src_corncob, src_alpha]
@@ -27,8 +28,8 @@ def get_letter_words_alphabetical(num_letters=5):
       if len(word) == num_letters:
         words_letters_file.write(word.lower() + '\n')
 
-def get_letter_words_freq_csv(num_letters=5):
-  with open(src_corncob, 'r') as all_words_file,\
+def get_letter_words_freq_csv(src, num_letters=5):
+  with open(src, 'r') as all_words_file,\
       open("unigram_freq.csv", 'r') as freq_words_file,\
       open("words_{}letters_freq.txt".format(num_letters), 'w') as words_letters_file:
     all_words = all_words_file.read().split('\n')
@@ -214,5 +215,5 @@ def suggest_words_interactive():
 #suggest_words()
 # suggest_words_interactive()
 #get_letter_words_alphabetical(num_letters=6)
-#get_letter_words_freq_csv(num_letters=6)
+#get_letter_words_freq_csv(src_wordle5, num_letters=5)
 #get_words_all_sources(num_letters=6)
